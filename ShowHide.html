@@ -1,0 +1,34 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+/*Below is a custom function used to show and hide the extended bios - Created on Jan 16, 2014 by Nadeem Ramjan*/
+<SCRIPT type="text/javascript">
+$(".ClickformoreLink").click( function() {
+	var bioName = $(this).attr('id'); 	//get id of the speaker bio that operations will occur on
+	//alert(bioName); 					//used during debugging
+	$('.BioMore').hide();  				//hide extended bio currently open on the screen (if any)
+	//alert(bioMore);  					//used during debugging
+	$('#' + bioName + 'More').show();  	//show the additional paragraphs of the speaker bio
+	$('.ClickformoreLink').show();  	//show other 'MORE' links that may be hidden from previous operations
+	$('#' + bioName).hide();  			//hide the 'MORE' link of the current bio clicked on
+});
+</script>
+</head>
+
+<body>
+
+<DIV class="clearfix"> <!-- Start Bio -->
+  <DIV class="grid_2 alpha">
+    <!-- image here ->>        
+  </DIV>
+  <DIV class="grid_6 omega">
+    <!-- first paragraph of text here-->
+    <A class="ClickformoreLink" id="Lastname"  onClick="return false;">MORE</A>
+    <DIV class="BioMore" id="LastnameMore">
+      <!-- additional text here-->
+    </DIV> <!--End Lastname   More-->
+  </DIV>  <!--End Lastname   Content-->
+</DIV> <!-- End Lastname   Bio--> 
+
+</body>
+</html>
