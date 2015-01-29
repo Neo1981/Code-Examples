@@ -9,4 +9,6 @@ Private Sub Manipulate()
   Sheet1.Range("P:P").EntireColumn.Hidden = True
   Sheet1.Cells.EntireRow.AutoFit
 
+  Sheet2.Range("G5", "G1000").NumberFormat = "$#,##0.00"
+
 End Sub
