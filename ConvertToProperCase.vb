@@ -15,3 +15,21 @@
       
   End With
   
+  
+  'Convert to proper case across entire workbook
+  
+    Dim j As Range
+    
+    
+    Dim mySheet As Worksheet
+    
+    For Each mySheet In Worksheets
+    
+        With mySheet
+            For Each j In .Range(.Range("g2"), .Range("i2").End(xlDown))
+                j = StrConv(j, vbProperCase)
+            Next
+        End With
+    
+    Next mySheet
+  
