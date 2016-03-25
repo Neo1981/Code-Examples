@@ -9,7 +9,7 @@
 #Step 1 - get query from the SQL file
 queryString <- paste(readLines("c:\\MyQuery.sql"), collapse=" ")
 
-#Step 2 - ODBC Connection and running the query
+#Step 2 - ODBC Connection 
 odbcChannel <- odbcConnect("CareTool")
 
 #Step 3 - Set Working Directory for the file to be placed
