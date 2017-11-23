@@ -1,0 +1,143 @@
+<?php
+
+?>
+
+<html>
+<head>
+<title>SQL Table in Website Template</title>
+
+
+<style>
+	
+	#myTable Tr:hover { background-color:yellow; color:black; }
+
+
+	tbody th{  background-color: #4C8BF5;  color: #fff;}
+	
+	body {background-color:lightgray;}
+	
+	* {     font-family: "TheSans", sans-serif; }
+	
+	.tooltip {
+    position: relative;
+    display: inline-block;
+    border-bottom: 1px dotted black;
+	cursor: hand;
+}
+
+.tooltip .tooltiptext {
+    visibility: hidden;
+    width: 500px;
+    background-color: black;
+    color: #fff;
+    text-align: center;
+    border-radius: 6px;
+    padding: 5px 0;
+
+    /* Position the tooltip */
+    position: absolute;
+    z-index: 1;
+}
+
+.tooltip:hover .tooltiptext {
+    visibility: visible;
+	
+	
+</style>
+
+<script>
+
+
+
+
+function searchTable() {
+    var input, filter, found, table, tr, td, i, j;
+    input = document.getElementById("myInput");
+    filter = input.value.toUpperCase();
+    table = document.getElementById("myTable");
+    tr = table.getElementsByTagName("tr");
+    for (i = 1; i < tr.length; i++) {
+        td = tr[i].getElementsByTagName("td");
+        for (j = 0; j < td.length; j++) {
+            if (td[j].innerHTML.toUpperCase().indexOf(filter) > -1) {
+                found = true;
+            }
+        }
+        if (found) {
+            tr[i].style.display = "";
+            found = false;
+        } else {
+            tr[i].style.display = "none";
+        }
+    }
+	
+
+}
+
+
+</script>
+
+</head>
+
+<body>
+
+<table>
+	<tr>
+		<!-- Add Logo Here -->
+		<td width="80%"><h1 style="float:right"><em>Accountable Care Analytics Web Apps</em></h1></td>
+	</tr>
+</table>
+
+<hr/>
+
+<h2>Insert Page Name</h2>
+<h5>Last Refreshed <?php $date = date('m/d/Y h:i:s a', time()); echo $date; ?> </h5>
+
+<p><strong>Dynamic Filter: </strong><input id='myInput' onkeyup='searchTable()' type='text'></p>
+
+
+
+<table id='myTable' border="1">
+
+<tr>
+  <th>MRN</th>
+  <th>Program</th>
+  <th>Status</th>
+  <th>FirstName</th>
+  <th>LastName</th>
+  <th>Details</th>
+</tr>
+
+<?php
+$serverName = "{DatabaseServer}";
+$connectionInfo = array( "Database"=>"{DB}", "UID"=>"{uid}", "PWD"=>"{pwd}");
+
+//$connectionInfo = array( "Database"=>"{DB}");
+
+$conn = sqlsrv_connect( $serverName, $connectionInfo);
+
+	
+	
+	$stmt = "{Insert Select Statement}";
+	$result = sqlsrv_query($conn,$stmt);
+  if ($result == FALSE) die ("could not execute statement $stmt<br />");
+  while ($row = sqlsrv_fetch_array( $result, SQLSRV_FETCH_ASSOC)) // while there are rows
+  {
+	// echo $row['MBR_NBR'].", ".$row['TotalSpend']."\n";
+	print "<tr >\n";
+	print "<td >".$row['MRN']."</div></td>\n";
+	print "<td>".$row['Program']."</td>\n";
+	print "<td>".$row['Status']."</td>\n";
+	print "<td>".$row['FirstName']."</td>\n";
+	print "<td>".$row['LastName']."</td>\n";
+	print "<td><div class='tooltip'> View Details <span class='tooltiptext'>This member has been enrolled since ".$row['Date'].".</span></td>\n";
+	print "</tr>\n\n";
+  }
+ 
+?>
+</table>
+</body>
+</html>
+
+<?php
+?>
