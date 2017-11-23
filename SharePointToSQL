@@ -1,0 +1,23 @@
+
+#install.packages("XML")
+
+library("XML")
+
+#Step 1: Get data from SharePoint ProcessLog into Dataframe
+#URL <- "https://{SharePointURL}/_vti_bin/ListData.svc/{SharePointListName}"   
+
+URL <- "https://{SharePointURL}/_vti_bin/ListData.svc/{SharePointListName}"
+data = xmlParse(readLines(URL))
+items = getNodeSet(data, "//m:properties") ## get the individual list items    
+
+df = xmlToDataFrame(items, stringsAsFactors = FALSE) ## convert to a data frame
+
+#keep <- c("Req","AnalystValue","RequestName","ReportStatusValue","DueDate","CompletedDate","VendorValue","Requester","Frequency","SystemImpactedValue")
+#df[keep]
+
+#install.packages("RODBC")
+#Step 2: Push into dbo.ProcessLog on PDWUser
+library(RODBC)
+odbcChannel <- odbcConnect("{ODBCNAME}")
+sqlQuery(odbcChannel,"drop table {FullTableNameAndPath}")
+sqlSave(odbcChannel, df, tablename = "{TableName}")
